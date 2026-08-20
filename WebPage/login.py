@@ -8,7 +8,7 @@ sys.path.append("/home/yogavarman/Projects/FoodChain")
 
 from Config.db import get_conn
 from Functions.AllFunctions import generate_userid
-from Functions.LogInFun import login_user,create_user
+from Functions.LogInFun import login_user,create_user,send_user_credentials
 
 
 st.set_page_config(
@@ -22,10 +22,7 @@ st.set_page_config(
 # UI
 
 st.title("🔐 FoodChain")
-
 st.caption("Food Chain Management Portal")
-
-
 login_tab, create_tab = st.tabs(["🔑 Login", "👤 Create User"])
 
 
@@ -34,9 +31,7 @@ login_tab, create_tab = st.tabs(["🔑 Login", "👤 Create User"])
 with login_tab:
     st.subheader("Login")
     username = st.text_input("Username",key="login_username")
-    
     password = st.text_input("Password",type="password",key="login_password")
-
     if st.button(
         "Login",
         use_container_width=True,
@@ -77,33 +72,17 @@ with create_tab:
 
     email = st.text_input("Email ID",key="email")
     date_of_birth = st.date_input("Date of Birth",key="date_of_birth")
-
     if st.button("Create User",use_container_width=True,type="primary"):
-
-        # -----------------------------
         # Validation
-        # -----------------------------
-
         if not first_name.strip():
-
             st.warning("Please enter first name.")
-
         elif not last_name.strip():
-
             st.warning("Please enter last name.")
-
         elif not email.strip():
-
             st.warning("Please enter email ID.")
-
         else:
-
             try:
-
-                # -----------------------------
                 # Create database user
-                # -----------------------------
-
                 user_id, username, temporary_password = create_user(
                     first_name=first_name.strip(),
                     last_name=last_name.strip(),
@@ -112,27 +91,14 @@ with create_tab:
                     dob=date_of_birth
                 )
 
-                # -----------------------------
                 # Send email
-                # -----------------------------
-
                 send_user_credentials(
                     email=email.strip(),
                     first_name=first_name.strip(),
                     username=username,
                     password=temporary_password
                 )
-
-                st.success(
-                    "✅ User created successfully!"
-                )
-
-                st.info(
-                    f"Username `{username}` has been sent to `{email}`."
-                )
-
+                st.success("✅ User created successfully!")
+                st.info(f"Username `{username}` has been sent to `{email}`.")
             except Exception as e:
-
-                st.error(
-                    f"❌ User creation failed: {e}"
-                )
+                st.error(f"❌ User creation failed: {e}")

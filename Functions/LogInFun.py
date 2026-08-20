@@ -117,15 +117,14 @@ def create_user(first_name, last_name, gender, email, dob):
         
         
 def send_user_credentials(email, first_name, username, password):
-
     import smtplib
     from email.message import EmailMessage
 
     SMTP_HOST = "smtp.gmail.com"
     SMTP_PORT = 587
 
-    SMTP_USERNAME = "yourgmail@gmail.com"
-    SMTP_PASSWORD = "your-16-character-app-password"
+    SMTP_USERNAME = "myworkasde@gmail.com"
+    SMTP_PASSWORD = "afczmocyxhxjuqli"
 
     message = EmailMessage()
 
@@ -134,8 +133,7 @@ def send_user_credentials(email, first_name, username, password):
     message["To"] = email
 
     message.set_content(
-        f"""
-Hello {first_name},
+        f"""Hello {first_name},
 
 Your FoodChain account has been created successfully.
 
@@ -150,12 +148,9 @@ FoodChain Team
     )
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-
+        server.ehlo()
         server.starttls()
-
-        server.login(
-            SMTP_USERNAME,
-            SMTP_PASSWORD
-        )
-
+        server.ehlo()
+        server.login(SMTP_USERNAME,SMTP_PASSWORD)
         server.send_message(message)
+    print(f"Email sent successfully to {email}")
