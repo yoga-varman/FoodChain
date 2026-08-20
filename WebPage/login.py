@@ -8,6 +8,7 @@ sys.path.append("/home/yogavarman/Projects/FoodChain")
 
 from Config.db import get_conn
 from Functions.AllFunctions import generate_userid
+from Functions.LogInFun import login_user,create_user
 
 
 st.set_page_config(
@@ -18,101 +19,23 @@ st.set_page_config(
 
 
 
-
-# ---------------------------------------------------------
-# Login
-# ---------------------------------------------------------
-
-
-
-# ---------------------------------------------------------
-# Create User
-# ---------------------------------------------------------
-
-
-
-
-# ---------------------------------------------------------
-# Send Email
-# ---------------------------------------------------------
-
-def send_user_credentials(email, first_name, username, password):
-
-    import smtplib
-    from email.message import EmailMessage
-
-    SMTP_HOST = "smtp.office365.com"
-    SMTP_PORT = 587
-
-    SMTP_USERNAME = "your-email@yourdomain.com"
-    SMTP_PASSWORD = "your-email-password"
-
-    message = EmailMessage()
-
-    message["Subject"] = "FoodChain Account Created"
-    message["From"] = SMTP_USERNAME
-    message["To"] = email
-
-    message.set_content(
-        f"""
-Hello {first_name},
-
-Your FoodChain account has been created successfully.
-
-Username: {username}
-Temporary Password: {password}
-
-Please login to FoodChain using these credentials.
-
-Regards,
-FoodChain Team
-"""
-    )
-
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-
-        server.starttls()
-
-        server.login(
-            SMTP_USERNAME,
-            SMTP_PASSWORD
-        )
-
-        server.send_message(message)
-
-
-# =========================================================
 # UI
-# =========================================================
 
 st.title("🔐 FoodChain")
 
 st.caption("Food Chain Management Portal")
 
 
-login_tab, create_tab = st.tabs(
-    ["🔑 Login", "👤 Create User"]
-)
+login_tab, create_tab = st.tabs(["🔑 Login", "👤 Create User"])
 
 
-# =========================================================
 # LOGIN TAB
-# =========================================================
 
 with login_tab:
-
     st.subheader("Login")
-
-    username = st.text_input(
-        "Username",
-        key="login_username"
-    )
-
-    password = st.text_input(
-        "Password",
-        type="password",
-        key="login_password"
-    )
+    username = st.text_input("Username",key="login_username")
+    
+    password = st.text_input("Password",type="password",key="login_password")
 
     if st.button(
         "Login",
@@ -132,9 +55,7 @@ with login_tab:
                 st.error(f"Login failed: {e}")
 
 
-# =========================================================
 # CREATE USER TAB
-# =========================================================
 
 with create_tab:
     st.subheader("Create User")
