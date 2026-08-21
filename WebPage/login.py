@@ -43,7 +43,9 @@ with login_tab:
             try:
                 if login_user(username, password):
                     st.success("✅ Login successful")
-                    st.rerun()
+                    st.session_state["logged_in"] = True
+                    st.session_state["username"] = username
+                    st.switch_page("FoodChain/dashboard.py")
                 else:
                     st.error("❌ Invalid username or password")
             except Exception as e:
