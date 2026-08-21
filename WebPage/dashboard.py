@@ -1,35 +1,25 @@
+import sys
 import streamlit as st
-import plotly.express as px
 import pandas as pd
+from sqlalchemy import create_engine
+
+from Config.db import get_conn,DATABASE_URL
 
 st.title("📊 FoodChain Dashboard")
 
-data = pd.DataFrame({
-    "Category": [
-        "Vegetables",
-        "Fruits",
-        "Grains",
-        "Dairy",
-        "Meat"
-    ],
-    "Products": [
-        35,
-        25,
-        20,
-        12,
-        8
-    ]
-})
+# Database connection
 
-fig = px.pie(
-    data,
-    names="Category",
-    values="Products",
-    hole=0.45,
-    title="Food Category Distribution"
-)
+engine = create_engine(DATABASE_URL)
 
-st.plotly_chart(
-    fig,
-    use_container_width=True
+# Get number of users
+query = "SELECT COUNT(*) AS user_count FROM foodchain.users"
+
+df = pd.read_sql(query, engine)
+
+user_count = int(df["user_count"].iloc[0])
+
+# Display user count
+st.metric(
+    label="👥 Total Users",
+    value=user_count
 )
