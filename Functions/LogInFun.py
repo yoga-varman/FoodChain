@@ -124,7 +124,7 @@ def send_user_credentials(email, first_name, username, password):
     SMTP_PORT = 587
 
     SMTP_USERNAME = "myworkasde@gmail.com"
-    SMTP_PASSWORD = "afczmocyxhxjuqli"
+    SMTP_PASSWORD = "afcz mocy xhxj uqli"
 
     message = EmailMessage()
 
@@ -151,6 +151,12 @@ FoodChain Team
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login(SMTP_USERNAME,SMTP_PASSWORD)
+
+        server.login(
+            SMTP_USERNAME,
+            SMTP_PASSWORD
+        )
+
         server.send_message(message)
+
     print(f"Email sent successfully to {email}")
