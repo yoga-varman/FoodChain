@@ -5,6 +5,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 import psycopg2
 
+
 # CONFIGURATION
 ENV_FILE = "/home/yogavarman/Projects/Config/config.env"
 
