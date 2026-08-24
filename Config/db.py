@@ -21,6 +21,7 @@ def decrypt_config(server_name: str) -> dict:
             "APP_KEY not found in config.env"
         )
 
+
     # Get encrypted server value
     encrypted = os.getenv(server_name)
     if not encrypted:
