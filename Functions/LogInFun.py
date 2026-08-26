@@ -8,21 +8,24 @@ from Config.db import JDBC_URL, DB_PROPERTIES, DATABASE_URL,get_conn
 
 from Functions.AllFunctions import generate_userid
 
-from Functions.LogInFun import JDBC_URL, DB_PROPERTIES, DATABASE_URL,get_conn
 
-import secrets
 import string
+import secrets
 import hashlib
-
 
 
 def generate_password(length=10):
     characters = string.ascii_letters + string.digits + "!@#$%"
-    return "".join(secrets.choice(characters) for _ in range(length))
+    return "".join(
+        secrets.choice(characters)
+        for _ in range(length)
+    )
+
 
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
+    return hashlib.sha256(
+        password.encode()
+    ).hexdigest()
 
 
 def login_user(username, password):
